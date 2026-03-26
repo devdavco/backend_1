@@ -1,5 +1,7 @@
 package co.edu.usbcali.coworkingbooking.controller;
 
+import co.edu.usbcali.coworkingbooking.dto.response.GetEspacioResponse;
+import co.edu.usbcali.coworkingbooking.mapper.EspacioMapper;
 import co.edu.usbcali.coworkingbooking.model.Espacio;
 import co.edu.usbcali.coworkingbooking.repository.EspacioRepository;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,15 +31,33 @@ public class EspacioController {
 
 
    @GetMapping("/all")
-   public List<Espacio> getAllEspacios(){
-       return espacioRepository.findAll();
+   public List<GetEspacioResponse> getAllEspacios(){
+
+       List<GetEspacioResponse> espaciosResponse;
+
+
+       //declara nueva lista de EspaciosResponse
+       List<Espacio> espacios = espacioRepository.findAll();
+
+       // Ir al Repository y obtener todos los espacios
+
+       espaciosResponse = EspacioMapper.entityToListGetEspacioResponse(espacios);
+
+
+       return espaciosResponse;
 
    }
 
    @GetMapping("/{id}")
-   public ResponseEntity<Espacio> getEspacioById(@PathVariable Integer id){
+   public ResponseEntity<GetEspacioResponse> getEspacioById(@PathVariable Integer id){
+
+       Espacio espacio = espacioRepository.getReferenceById(id);
+
+       GetEspacioResponse  espacioResponse = EspacioMapper.entityToGetEspacioResponse(espacio);
+
+
        return new ResponseEntity<>(
-               espacioRepository.getReferenceById(id),
+               espacioResponse,
                HttpStatus.OK
        );
    }
