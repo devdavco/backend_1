@@ -5,11 +5,12 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class GetEspacioResponse {
+public class GetUsuarioResponse {
 
     private Integer id;
     private String nombre;
-    private String tipo;
-    private Integer capacidad;
-    private Integer minutos_limpieza;
+    private String email;
+    private String password_hash;
+    private String rol;
+
 }

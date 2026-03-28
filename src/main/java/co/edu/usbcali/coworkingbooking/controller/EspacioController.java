@@ -17,7 +17,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/espacios")
 public class EspacioController {
 
    private final EspacioRepository espacioRepository;
@@ -29,12 +29,10 @@ public class EspacioController {
        return "pong";
    }
 
-
    @GetMapping("/all")
    public List<GetEspacioResponse> getAllEspacios(){
 
        List<GetEspacioResponse> espaciosResponse;
-
 
        //declara nueva lista de EspaciosResponse
        List<Espacio> espacios = espacioRepository.findAll();
@@ -42,7 +40,6 @@ public class EspacioController {
        // Ir al Repository y obtener todos los espacios
 
        espaciosResponse = EspacioMapper.entityToListGetEspacioResponse(espacios);
-
 
        return espaciosResponse;
 
@@ -55,12 +52,13 @@ public class EspacioController {
 
        GetEspacioResponse  espacioResponse = EspacioMapper.entityToGetEspacioResponse(espacio);
 
-
        return new ResponseEntity<>(
                espacioResponse,
                HttpStatus.OK
        );
    }
+
+
 
 }
 

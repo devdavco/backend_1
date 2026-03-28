@@ -26,10 +26,10 @@ public class Usuario {
     private String email;
 
     @Column(name = "password_hash" , nullable = false, length = 255)
-    private Integer password_hash;
+    private String password_hash;
 
     @Column(name = "rol" , nullable = false  )
-    private Integer rol;
+    private String rol;
 
 }
 

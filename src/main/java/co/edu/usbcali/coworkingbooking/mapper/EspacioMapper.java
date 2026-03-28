@@ -16,6 +16,8 @@ public class EspacioMapper {
                 .id(espacio.getId())
                 .nombre(espacio.getNombre())
                 .tipo(espacio.getTipo())
+                .capacidad(espacio.getCapacidad())
+                .minutos_limpieza(espacio.getMinutos_limpieza())
                 .build();
         return getEspacioResponse;
     }
