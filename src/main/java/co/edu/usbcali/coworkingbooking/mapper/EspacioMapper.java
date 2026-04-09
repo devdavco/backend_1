@@ -1,5 +1,6 @@
 package co.edu.usbcali.coworkingbooking.mapper;
 
+import co.edu.usbcali.coworkingbooking.dto.request.CreateEspacioRequest;
 import co.edu.usbcali.coworkingbooking.dto.response.GetEspacioResponse;
 import co.edu.usbcali.coworkingbooking.model.Espacio;
 
@@ -38,5 +39,23 @@ public class EspacioMapper {
         }
 */
         return espacios.stream().map(EspacioMapper::entityToGetEspacioResponse).toList();
+    }
+
+    public static Espacio createEspacioRequestToEntity(CreateEspacioRequest createEspacioRequest) {
+       /*
+        //instanciar objeto espacio
+        Espacio espacio = new Espacio();
+        // asignar valores  a los atributos del objeto
+        espacio.setNombre(createEspacioRequest.getNombre());
+
+        return espacio;
+        */
+
+        return Espacio.builder()
+                .nombre(createEspacioRequest.getNombre())
+                .tipo(createEspacioRequest.getTipo())
+                .capacidad(createEspacioRequest.getCapacidad())
+                .minutos_limpieza(createEspacioRequest.getMinutos_limpieza())
+                .build();
     }
 }
