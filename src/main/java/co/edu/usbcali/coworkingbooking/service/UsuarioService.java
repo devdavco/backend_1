@@ -6,4 +6,5 @@ import co.edu.usbcali.coworkingbooking.dto.response.GetUsuarioResponse;
 public interface UsuarioService {
 
     GetUsuarioResponse createUsuario(CreateUsuarioRequest createUsuarioRequest) throws Exception;
+
 }

@@ -7,5 +7,4 @@ public interface EspacioService {
 
     GetEspacioResponse createEspacio(CreateEspacioRequest createEspacioRequest) throws Exception;
 
-
 }

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 
 
 @Entity
-@Table(name = "reserva")
+@Table(name = "reservas")
 @Data
 @Builder
 @AllArgsConstructor
