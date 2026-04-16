@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -65,5 +66,21 @@ public class ReservaController {
         return new ResponseEntity<>(
                 reservaResponse, HttpStatus.OK
         );
+    }
+
+    //Eliminar reserva
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarReserva(@PathVariable Integer id) {
+
+        Optional<Reserva> reservaOpt = reservaRepository.findById(id);
+
+        if (reservaOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Reserva no encontrada con ID: " + id);
+        }
+
+        reservaRepository.delete(reservaOpt.get());
+
+        return ResponseEntity.ok("Reserva eliminada exitosamente");
     }
 }
