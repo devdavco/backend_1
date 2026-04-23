@@ -13,8 +13,6 @@ import co.edu.usbcali.coworkingbooking.service.ReservaService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -30,58 +28,58 @@ public class ReservaServiceImpl implements ReservaService {
     @Override
     public CreateReservaResponse createReserva(CreateReservaRequest createReservaRequest) throws Exception {
 
-       try  {
-           //Validar que es objeto no sea nulo
-           if(Objects.isNull(createReservaRequest)){
-               throw new Exception("El objeto CreateReservaRequest no puede ser nulo.");
-           }
+        try {
+            //Validar que es objeto no sea nulo
+            if (Objects.isNull(createReservaRequest)) {
+                throw new Exception("El objeto CreateReservaRequest no puede ser nulo.");
+            }
 
-           //validar que el campo usuarioId venga con valor
+            //validar que el campo usuarioId venga con valor
 
-           if(Objects.isNull(createReservaRequest.getUsuarioId()) || createReservaRequest.getUsuarioId() <= 0 ){
-               throw new Exception("El campo usuarioId no puede ser nulo");
-           }
+            if (Objects.isNull(createReservaRequest.getUsuarioId()) || createReservaRequest.getUsuarioId() <= 0) {
+                throw new Exception("El campo usuarioId no puede ser nulo");
+            }
 
-           //validar que el campo espacioId no sea nulo
+            //validar que el campo espacioId no sea nulo
 
-           if(Objects.isNull(createReservaRequest.getEspacioId()) || createReservaRequest.getEspacioId() <= 0 ){
-               throw new Exception("El campo espacioId no puede ser nulo");
-           }
+            if (Objects.isNull(createReservaRequest.getEspacioId()) || createReservaRequest.getEspacioId() <= 0) {
+                throw new Exception("El campo espacioId no puede ser nulo");
+            }
 
-           //Validar que usuario exista en base de datos
+            //Validar que usuario exista en base de datos
 
-           Optional<Usuario> usuario = usuarioRepository.findById(createReservaRequest.getUsuarioId());
+            Optional<Usuario> usuario = usuarioRepository.findById(createReservaRequest.getUsuarioId());
 
-           if(!usuario.isPresent()){
-               throw new Exception("El usuario no existe en la base de datos.");
-           }
+            if (!usuario.isPresent()) {
+                throw new Exception("El usuario no existe en la base de datos.");
+            }
 
-           Optional<Espacio> espacio = espacioRepository.findById(createReservaRequest.getEspacioId());
+            Optional<Espacio> espacio = espacioRepository.findById(createReservaRequest.getEspacioId());
 
-           if(!espacio.isPresent()){
-               throw new Exception("El espacio no existe en la base de datos.");
+            if (!espacio.isPresent()) {
+                throw new Exception("El espacio no existe en la base de datos.");
 
-           }
+            }
 
-           //Convertir Entity Screening
+            //Convertir Entity Screening
 
-           Reserva reserva = Reserva.builder()
-                   .usuario(usuario.get())
-                   .espacio(espacio.get())
-                   .horaInicio(createReservaRequest.getHoraInicio())
-                   .horaFinUsuario(createReservaRequest.getHoraFinUsuario())
-                   .horaFinTotal(createReservaRequest.getHoraFinTotal())
-                   .version(createReservaRequest.getVersion())
-                   .estado(createReservaRequest.getEstado())
-                   .build();
+            Reserva reserva = Reserva.builder()
+                    .usuario(usuario.get())
+                    .espacio(espacio.get())
+                    .horaInicio(createReservaRequest.getHoraInicio())
+                    .horaFinUsuario(createReservaRequest.getHoraFinUsuario())
+                    .horaFinTotal(createReservaRequest.getHoraFinTotal())
+                    .version(createReservaRequest.getVersion())
+                    .estado(createReservaRequest.getEstado())
+                    .build();
 
-           //Persistir en la base de datos
-           reserva = reservaRepository.save(reserva);
+            //Persistir en la base de datos
+            reserva = reservaRepository.save(reserva);
 
-           return ReservaMapper.entityToCreateReservaResponse(reserva);
-       } catch (Exception e) {
-           throw e;
-       }
+            return ReservaMapper.entityToCreateReservaResponse(reserva);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
@@ -92,12 +90,24 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public CreateReservaResponse getReservabyId(Integer id){
+    public CreateReservaResponse getReservabyId(Integer id) {
         Reserva reserva = reservaRepository.findById(id).
                 orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
         CreateReservaResponse getReservaResponse = ReservaMapper.entityToCreateReservaResponse(reserva);
         return getReservaResponse;
     }
 
+    // ReservaServiceImpl.java
+    @Override
+    public CreateReservaResponse eliminarReserva(Integer id) { // Cambia el retorno a void
+        // 1. Buscar y validar (lanza excepción si no existe)
+        Reserva reserva = reservaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
 
+        // 2. Eliminar (el método delete es void, no se retorna nada)
+        reservaRepository.delete(reserva);
+
+        // El método termina aquí implícitamente
+        return null;
+    }
 }

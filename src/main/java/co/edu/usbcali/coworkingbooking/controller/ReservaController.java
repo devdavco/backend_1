@@ -52,6 +52,15 @@ public class ReservaController {
         return reservaService.getReservabyId(id);
     }
 
+
+    // ReservaController.java
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarReserva(@PathVariable Integer id) {
+            reservaService.eliminarReserva(id);
+            return ResponseEntity.ok("Reserva eliminada exitosamente");
+
+    }
+
     //Eliminar reserva
     /*@DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarReserva(@PathVariable Integer id) {

@@ -1,6 +1,5 @@
 package co.edu.usbcali.coworkingbooking.service;
 
-import co.edu.usbcali.coworkingbooking.dto.request.CreateEspacioRequest;
 import co.edu.usbcali.coworkingbooking.dto.request.CreateReservaRequest;
 import co.edu.usbcali.coworkingbooking.dto.response.CreateReservaResponse;
 
@@ -11,6 +10,6 @@ public interface ReservaService {
         CreateReservaResponse createReserva(CreateReservaRequest createReservaRequest) throws Exception;
         List<CreateReservaResponse> getAllReservas();
         CreateReservaResponse getReservabyId(Integer id);
-        //CreateReservaResponse eliminarReserva(Integer id);
+        CreateReservaResponse eliminarReserva(Integer id);
 
 }
