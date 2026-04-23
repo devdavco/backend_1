@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 @Service
@@ -80,8 +82,22 @@ public class ReservaServiceImpl implements ReservaService {
        } catch (Exception e) {
            throw e;
        }
-
-
     }
+
+    @Override
+    public List<CreateReservaResponse> getAllReservas() {
+        List<Reserva> reservas = reservaRepository.findAll();
+        List<CreateReservaResponse> getReservaResponseList = ReservaMapper.entityToListCreateReservaResponse(reservas);
+        return getReservaResponseList;
+    }
+
+    @Override
+    public CreateReservaResponse getReservabyId(Integer id){
+        Reserva reserva = reservaRepository.findById(id).
+                orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
+        CreateReservaResponse getReservaResponse = ReservaMapper.entityToCreateReservaResponse(reserva);
+        return getReservaResponse;
+    }
+
 
 }

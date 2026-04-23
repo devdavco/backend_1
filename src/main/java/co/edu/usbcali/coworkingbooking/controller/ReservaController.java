@@ -24,8 +24,8 @@ import java.util.Optional;
 @RequestMapping("/reserva")
 public class ReservaController {
 
-    private final ReservaRepository reservaRepository;
     private final ReservaService reservaService;
+
 
     @GetMapping("/ping")
     public String ping() {
@@ -44,32 +44,16 @@ public class ReservaController {
 
     @GetMapping("/all")
     public List<CreateReservaResponse> getAllReservas() {
-
-        List<CreateReservaResponse> reservaResponse;
-
-        List<Reserva> reservas = reservaRepository.findAll();
-
-        // Ir al Repository y obtener todos los espacios
-
-        reservaResponse = ReservaMapper.entityToListCreateReservaResponse(reservas);
-
-        return reservaResponse;
-
+        return reservaService.getAllReservas();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CreateReservaResponse> getReservaById(@PathVariable Integer id) {
-
-        Reserva reserva = reservaRepository.getReferenceById(id);
-        CreateReservaResponse reservaResponse = ReservaMapper.entityToGetReservaResponse(reserva);
-
-        return new ResponseEntity<>(
-                reservaResponse, HttpStatus.OK
-        );
+    public CreateReservaResponse getReservabyId(@PathVariable Integer id) {
+        return reservaService.getReservabyId(id);
     }
 
     //Eliminar reserva
-    @DeleteMapping("/eliminar/{id}")
+    /*@DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarReserva(@PathVariable Integer id) {
 
         Optional<Reserva> reservaOpt = reservaRepository.findById(id);
@@ -83,4 +67,5 @@ public class ReservaController {
 
         return ResponseEntity.ok("Reserva eliminada exitosamente");
     }
+     */
 }
