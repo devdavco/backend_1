@@ -1,6 +1,7 @@
 package co.edu.usbcali.coworkingbooking.controller;
 
 import co.edu.usbcali.coworkingbooking.dto.request.CreateEspacioRequest;
+import co.edu.usbcali.coworkingbooking.dto.response.CreateReservaResponse;
 import co.edu.usbcali.coworkingbooking.dto.response.GetEspacioResponse;
 import co.edu.usbcali.coworkingbooking.mapper.EspacioMapper;
 import co.edu.usbcali.coworkingbooking.model.Espacio;
@@ -19,7 +20,6 @@ import java.util.List;
 @RequestMapping("/espacios")
 public class EspacioController {
     //inyecciones de dependencias en el controller
-    private final EspacioRepository espacioRepository;
     private final EspacioService espacioService;
 
     @GetMapping("/ping")
@@ -28,33 +28,17 @@ public class EspacioController {
         return "pong";
     }
 
+
     @GetMapping("/all")
     public List<GetEspacioResponse> getAllEspacios() {
-
-        List<GetEspacioResponse> espaciosResponse;
-
-        //declara nueva lista de EspaciosResponse
-        List<Espacio> espacios = espacioRepository.findAll();
-
-        // Ir al Repository y obtener todos los espacios
-
-        espaciosResponse = EspacioMapper.entityToListGetEspacioResponse(espacios);
-
-        return espaciosResponse;
-
+        return espacioService.getAllEspacios();
     }
 
+
+
     @GetMapping("/{id}")
-    public ResponseEntity<GetEspacioResponse> getEspacioById(@PathVariable Integer id) {
-
-        Espacio espacio = espacioRepository.getReferenceById(id);
-
-        GetEspacioResponse espacioResponse = EspacioMapper.entityToGetEspacioResponse(espacio);
-
-        return new ResponseEntity<>(
-                espacioResponse,
-                HttpStatus.OK
-        );
+    public GetEspacioResponse getEspacioById(@PathVariable Integer id) {
+        return espacioService.getEspacioById(id);
     }
 
     @PostMapping("/create")

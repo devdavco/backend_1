@@ -2,13 +2,13 @@ package co.edu.usbcali.coworkingbooking.service.impl;
 
 import co.edu.usbcali.coworkingbooking.dto.request.CreateEspacioRequest;
 import co.edu.usbcali.coworkingbooking.dto.response.GetEspacioResponse;
-import co.edu.usbcali.coworkingbooking.dto.response.GetUsuarioResponse;
 import co.edu.usbcali.coworkingbooking.mapper.EspacioMapper;
 import co.edu.usbcali.coworkingbooking.model.Espacio;
 import co.edu.usbcali.coworkingbooking.repository.EspacioRepository;
 import co.edu.usbcali.coworkingbooking.service.EspacioService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -49,4 +49,19 @@ public class EspacioServiceImpl implements EspacioService {
             throw e;
         }
     }
+
+    @Override
+    public List<GetEspacioResponse> getAllEspacios() {
+        List<Espacio> espacios = espacioRepository.findAll();
+        return EspacioMapper.entityToListGetEspacioResponse(espacios);
+
+    }
+
+    @Override
+    public GetEspacioResponse getEspacioById(Integer id) {
+        Espacio espacio = espacioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
+        return EspacioMapper.entityToGetEspacioResponse(espacio);
+    }
+
 }

@@ -61,20 +61,4 @@ public class ReservaController {
 
     }
 
-    //Eliminar reserva
-    /*@DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarReserva(@PathVariable Integer id) {
-
-        Optional<Reserva> reservaOpt = reservaRepository.findById(id);
-
-        if (reservaOpt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Reserva no encontrada con ID: " + id);
-        }
-
-        reservaRepository.delete(reservaOpt.get());
-
-        return ResponseEntity.ok("Reserva eliminada exitosamente");
-    }
-     */
 }
