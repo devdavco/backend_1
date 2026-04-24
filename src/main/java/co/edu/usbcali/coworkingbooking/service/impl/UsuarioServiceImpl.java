@@ -51,4 +51,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         return UsuarioMapper.entityToGetUsuarioResponse(usuario);
     }
 
+    @Override
+    public void eliminarUsuario(Integer id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: "+ id));
+        usuarioRepository.delete(usuario);
+    }
+
 }

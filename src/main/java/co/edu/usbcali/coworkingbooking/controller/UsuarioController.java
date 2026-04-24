@@ -1,6 +1,7 @@
 package co.edu.usbcali.coworkingbooking.controller;
 
 import co.edu.usbcali.coworkingbooking.dto.request.CreateUsuarioRequest;
+import co.edu.usbcali.coworkingbooking.dto.response.EliminarUsuarioResponse;
 import co.edu.usbcali.coworkingbooking.dto.response.GetUsuarioResponse;
 import co.edu.usbcali.coworkingbooking.mapper.UsuarioMapper;
 import co.edu.usbcali.coworkingbooking.model.Usuario;
@@ -44,5 +45,22 @@ public class UsuarioController {
                 HttpStatus.CREATED
         );
     }
+    /*
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Integer id){
+        usuarioService.eliminarUsuario(id);
+        return ResponseEntity.ok("Reserva eliminada exitosamente");
+    }
+     */
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<EliminarUsuarioResponse> eliminarUsuario(@PathVariable Integer id) {
+        usuarioService.eliminarUsuario(id);
+        EliminarUsuarioResponse response = EliminarUsuarioResponse.builder()
+                .success(true)
+                .message("Reserva eliminada exitosamente")
+                .idEliminado(id)
+                .build();
 
+        return ResponseEntity.ok(response);
+    }
 }

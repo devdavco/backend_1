@@ -97,10 +97,9 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public CreateReservaResponse eliminarReserva(Integer id) { // Cambia el retorno a void
+    public void eliminarReserva(Integer id) {
         Reserva reserva = reservaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
         reservaRepository.delete(reserva);
-        return null;
     }
 }
