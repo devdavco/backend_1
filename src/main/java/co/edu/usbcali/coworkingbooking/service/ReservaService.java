@@ -10,6 +10,6 @@ public interface ReservaService {
         CreateReservaResponse createReserva(CreateReservaRequest createReservaRequest) throws Exception;
         List<CreateReservaResponse> getAllReservas();
         CreateReservaResponse getReservabyId(Integer id);
-        CreateReservaResponse eliminarReserva(Integer id);
+        void eliminarReserva(Integer id);
 
 }

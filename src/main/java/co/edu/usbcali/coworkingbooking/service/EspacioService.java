@@ -10,4 +10,5 @@ public interface EspacioService {
     GetEspacioResponse createEspacio(CreateEspacioRequest createEspacioRequest) throws Exception;
     List<GetEspacioResponse> getAllEspacios();
     GetEspacioResponse getEspacioById(Integer id);
+    void eliminarEspacio(Integer id);
 }

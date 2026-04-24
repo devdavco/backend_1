@@ -11,4 +11,5 @@ public interface UsuarioService {
     GetUsuarioResponse createUsuario(CreateUsuarioRequest createUsuarioRequest) throws Exception;
     List<GetUsuarioResponse> getAllUsuarios();
     GetUsuarioResponse getUsuarioById(Integer id);
+    void eliminarUsuario(Integer id);
 }

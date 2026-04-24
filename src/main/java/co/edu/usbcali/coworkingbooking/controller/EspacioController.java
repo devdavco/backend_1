@@ -50,6 +50,11 @@ public class EspacioController {
 
         );
     }
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarEspacio(@PathVariable Integer id) {
+        espacioService.eliminarEspacio(id);
+        return ResponseEntity.ok("Reserva eliminada exitosamente");
+    }
 
 
 }

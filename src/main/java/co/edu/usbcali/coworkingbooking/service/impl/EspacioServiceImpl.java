@@ -64,4 +64,11 @@ public class EspacioServiceImpl implements EspacioService {
         return EspacioMapper.entityToGetEspacioResponse(espacio);
     }
 
+    @Override
+    public void eliminarEspacio(Integer id) {
+        Espacio espacio = espacioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
+        espacioRepository.delete(espacio);
+    }
+
 }
