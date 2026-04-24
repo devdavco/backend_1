@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private final UsuarioRepository usuarioRepository;
     private final UsuarioService  usuarioService;
 
     @GetMapping("/ping")
@@ -29,24 +28,14 @@ public class UsuarioController {
 
     @GetMapping("/all")
     public List<GetUsuarioResponse> getAllUsuarios(){
-
-        List<GetUsuarioResponse> usuariosResponse;
-        List<Usuario> usuarios = usuarioRepository.findAll();
-//hola
-        usuariosResponse = UsuarioMapper.entityToListGetUsuarioResponse(usuarios);
-        return usuariosResponse;
+        return usuarioService.getAllUsuarios();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetUsuarioResponse> getUsuarioById(@PathVariable Integer id){
-
-        Usuario usuario = usuarioRepository.getReferenceById(id);
-        GetUsuarioResponse usuarioResponse = UsuarioMapper.entityToGetUsuarioResponse(usuario);
-
-        return new ResponseEntity<>(
-                usuarioResponse, HttpStatus.OK
-        );
+    public GetUsuarioResponse getUsuarioById(@PathVariable Integer id){
+        return usuarioService.getUsuarioById(id);
     }
+
     @PostMapping("/create")
     public ResponseEntity<GetUsuarioResponse> createUsuario(@RequestBody CreateUsuarioRequest createUsuarioRequest) throws Exception{
         GetUsuarioResponse usuarioCreated = usuarioService.createUsuario(createUsuarioRequest);

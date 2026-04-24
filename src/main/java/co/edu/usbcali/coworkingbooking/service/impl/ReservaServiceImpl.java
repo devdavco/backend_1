@@ -93,8 +93,7 @@ public class ReservaServiceImpl implements ReservaService {
     public CreateReservaResponse getReservabyId(Integer id) {
         Reserva reserva = reservaRepository.findById(id).
                 orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
-        CreateReservaResponse getReservaResponse = ReservaMapper.entityToCreateReservaResponse(reserva);
-        return getReservaResponse;
+        return ReservaMapper.entityToCreateReservaResponse(reserva);
     }
 
     @Override
