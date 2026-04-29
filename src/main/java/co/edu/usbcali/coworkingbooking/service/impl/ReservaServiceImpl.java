@@ -102,4 +102,58 @@ public class ReservaServiceImpl implements ReservaService {
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
         reservaRepository.delete(reserva);
     }
+
+    @Override
+    public CreateReservaResponse actualizarParcial(Integer id, CreateReservaRequest requestDto) {
+        Reserva reserva = reservaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
+
+
+        // --- VALIDACIONES MANUALES (Solo si el campo NO es null) ---
+
+        if (requestDto.getEspacioId() != null) {
+            // Validar que el espacio existe
+            Espacio espacioExistente = espacioRepository.findById(requestDto.getEspacioId())
+                    .orElseThrow(() -> new RuntimeException("Espacio no encontrado"));
+
+            // Asignamos el OBJETO, no el ID
+            reserva.setEspacio(espacioExistente);
+        }
+
+        if (requestDto.getUsuarioId() != null) {
+            // Validar que el usuario existe
+            Usuario usuarioExistente = usuarioRepository.findById(requestDto.getUsuarioId())
+                    .orElseThrow(() -> new RuntimeException( "Usuario no encontrado"));
+
+            reserva.setUsuario(usuarioExistente);
+        }
+
+        if (requestDto.getHoraInicio() != null) {
+            reserva.setHoraInicio(requestDto.getHoraInicio());
+        }
+        if (requestDto.getHoraFinUsuario() != null) {
+            reserva.setHoraFinUsuario(requestDto.getHoraFinUsuario());
+        }
+        if (requestDto.getHoraFinTotal() != null) {
+            reserva.setHoraFinTotal(requestDto.getHoraFinTotal());
+        }
+        if (requestDto.getEstado() != null && !requestDto.getEstado().isBlank()) {
+            reserva.setEstado(requestDto.getEstado());
+        }
+
+
+        Reserva guardada = reservaRepository.save(reserva);
+        // 3. Retornar
+        return CreateReservaResponse.builder()
+                .id(guardada.getId())
+                .espacioId(guardada.getEspacio().getId()) // Accedemos al ID del objeto
+                .usuarioId(guardada.getUsuario().getId())
+                .horaInicio(guardada.getHoraInicio())
+                .horaFinUsuario(guardada.getHoraFinUsuario())
+                .horaFinTotal(guardada.getHoraFinTotal())
+                .estado(guardada.getEstado())
+                .version(guardada.getVersion())
+                .build();
+
+    }
 }
