@@ -63,9 +63,12 @@ public class ReservaController {
 
     //Update reserva
     @PutMapping("update/{id}")
-    public ResponseEntity<CreateReservaResponse> updateReserva(@PathVariable Integer id,@RequestBody CreateReservaRequest requestDto){
+    public ResponseEntity<CreateReservaResponse> updateReserva(@PathVariable Integer id,@RequestBody CreateReservaRequest requestDto) throws Exception {
         CreateReservaResponse responseDto = reservaService.actualizarParcial(id,requestDto);
-        return null;
+        return new ResponseEntity<>(
+                responseDto,
+                HttpStatus.OK
+        );
     }
 
 }
