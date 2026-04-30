@@ -102,4 +102,65 @@ public class ReservaServiceImpl implements ReservaService {
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
         reservaRepository.delete(reserva);
     }
+
+    @Override
+    public CreateReservaResponse actualizarParcial(Integer id, CreateReservaRequest requestDto) throws Exception{
+        try {
+
+            // Validar que realmente exista la reserva en base de datos
+            Reserva reserva = reservaRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
+
+
+            // --- VALIDACIONES MANUALES (Solo si el campo NO es null) ---
+            //idEspacio
+            if (Objects.isNull(requestDto.getEspacioId()) || requestDto.getEspacioId() <= 0) {
+                throw new Exception("El campo espacioId no puede ser nulo");
+            }
+
+            // idUsuario
+            if (Objects.isNull(requestDto.getUsuarioId()) || requestDto.getUsuarioId() <= 0) {
+                throw new Exception("El campo usuarioId no puede ser nulo");
+            }
+
+            // Cargar desde base de datos usando optional
+            Espacio espacio = espacioRepository.findById(requestDto.getEspacioId())
+                    .orElseThrow(() -> new RuntimeException("Espacio no encontrado con ID: " + requestDto.getEspacioId()));
+
+            Usuario usuario = usuarioRepository.findById(requestDto.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Espacio no encontrado con ID: " + requestDto.getUsuarioId()));
+
+            Optional<Usuario> usuarioOpt = usuarioRepository.findById(requestDto.getUsuarioId());
+
+            if (!usuarioOpt.isPresent()) {
+                throw new Exception("El usuario no existe en la base de datos.");
+            }
+            Optional<Espacio> espacioOpt = espacioRepository.findById(requestDto.getEspacioId());
+
+            if (!espacioOpt.isPresent()) {
+                throw new Exception("El espacio no existe en la base de datos.");
+            }
+
+        // Cargar las otras entidades foráneas usando el orElseThrow
+
+            // Modificar atributos de la reserva usando el request y los objetos foráneos
+            reserva.setEspacio(espacio);
+            reserva.setUsuario(usuario);
+            reserva.setEstado(requestDto.getEstado());
+            reserva.setVersion(requestDto.getVersion());
+            reserva.setHoraFinTotal(requestDto.getHoraFinTotal());
+            reserva.setHoraInicio(requestDto.getHoraInicio());
+            reserva.setHoraFinUsuario(requestDto.getHoraFinUsuario());
+
+            Reserva guardada = reservaRepository.save(reserva);
+
+            // 3. Retornar
+
+            return ReservaMapper.entityToCreateReservaResponse(guardada);
+
+        }catch (Exception e) {
+            throw e;
+        }
+    }
+
 }
