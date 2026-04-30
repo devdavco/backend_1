@@ -1,15 +1,10 @@
 package co.edu.usbcali.coworkingbooking.controller;
 
 
-import co.edu.usbcali.coworkingbooking.dto.request.CreateEspacioRequest;
 import co.edu.usbcali.coworkingbooking.dto.request.CreateReservaRequest;
+import co.edu.usbcali.coworkingbooking.dto.request.UpdateReservaRequest;
 import co.edu.usbcali.coworkingbooking.dto.response.CreateReservaResponse;
-import co.edu.usbcali.coworkingbooking.dto.response.GetEspacioResponse;
-import co.edu.usbcali.coworkingbooking.mapper.EspacioMapper;
-import co.edu.usbcali.coworkingbooking.mapper.ReservaMapper;
-import co.edu.usbcali.coworkingbooking.model.Espacio;
-import co.edu.usbcali.coworkingbooking.model.Reserva;
-import co.edu.usbcali.coworkingbooking.repository.ReservaRepository;
+import co.edu.usbcali.coworkingbooking.dto.response.UpdateReservaResponse;
 import co.edu.usbcali.coworkingbooking.service.ReservaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -60,7 +54,7 @@ public class ReservaController {
             return ResponseEntity.ok("Reserva eliminada exitosamente");
 
     }
-
+/*
     //Update reserva
     @PutMapping("update/{id}")
     public ResponseEntity<CreateReservaResponse> updateReserva(@PathVariable Integer id,@RequestBody CreateReservaRequest requestDto) throws Exception {
@@ -71,4 +65,16 @@ public class ReservaController {
         );
     }
 
+
+ */
+
+    //Update reserva
+    @PutMapping("update/{id}")
+    public ResponseEntity<UpdateReservaResponse> updateReserva(@PathVariable Integer id, @RequestBody UpdateReservaRequest requestDto) throws Exception {
+        UpdateReservaResponse responseDto = reservaService.updateReserva(id,requestDto);
+        return new ResponseEntity<>(
+                responseDto,
+                HttpStatus.OK
+        );
+    }
 }

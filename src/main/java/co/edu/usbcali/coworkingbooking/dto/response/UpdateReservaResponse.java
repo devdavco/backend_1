@@ -1,5 +1,6 @@
 package co.edu.usbcali.coworkingbooking.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,8 +8,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Builder
-public class CreateReservaResponse {
-
+public class UpdateReservaResponse {
     private Integer id;
 
     private Integer usuarioId;
@@ -19,6 +19,4 @@ public class CreateReservaResponse {
     private Timestamp horaFinTotal;
     private String estado;
     private Integer version;
-
-
 }

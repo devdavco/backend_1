@@ -1,9 +1,9 @@
 package co.edu.usbcali.coworkingbooking.mapper;
 
 import co.edu.usbcali.coworkingbooking.dto.response.CreateReservaResponse;
+import co.edu.usbcali.coworkingbooking.dto.response.UpdateReservaResponse;
 import co.edu.usbcali.coworkingbooking.model.Reserva;
 
-import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.List;
 
@@ -43,5 +43,18 @@ public class ReservaMapper {
 
         return reserva.stream().map(ReservaMapper::entityToGetReservaResponse).toList();
 
+    }
+
+    public static UpdateReservaResponse entityToUpdateReservaResponse(Reserva reserva) {
+        return UpdateReservaResponse.builder()
+                .id(reserva.getId())
+                .usuarioId(Objects.nonNull(reserva.getUsuario()) ? reserva.getUsuario().getId() : null)
+                .espacioId(Objects.nonNull(reserva.getEspacio()) ? reserva.getEspacio().getId() : null)
+                .horaInicio(Objects.nonNull(reserva.getHoraInicio()) ? reserva.getHoraInicio() : null)
+                .horaFinUsuario(Objects.nonNull(reserva.getHoraFinUsuario()) ? reserva.getHoraFinUsuario() : null)
+                .horaFinTotal(Objects.nonNull(reserva.getHoraFinTotal()) ? reserva.getHoraFinTotal() : null)
+                .estado(Objects.nonNull(reserva.getEstado()) ? reserva.getEstado() : null)
+                .version(Objects.nonNull(reserva.getVersion()) ? reserva.getVersion() : null)
+                .build();
     }
 }

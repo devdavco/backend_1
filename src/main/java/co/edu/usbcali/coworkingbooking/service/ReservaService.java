@@ -1,7 +1,9 @@
 package co.edu.usbcali.coworkingbooking.service;
 
 import co.edu.usbcali.coworkingbooking.dto.request.CreateReservaRequest;
+import co.edu.usbcali.coworkingbooking.dto.request.UpdateReservaRequest;
 import co.edu.usbcali.coworkingbooking.dto.response.CreateReservaResponse;
+import co.edu.usbcali.coworkingbooking.dto.response.UpdateReservaResponse;
 
 import java.util.List;
 
@@ -11,5 +13,7 @@ public interface ReservaService {
         List<CreateReservaResponse> getAllReservas();
         CreateReservaResponse getReservabyId(Integer id);
         void eliminarReserva(Integer id);
-        CreateReservaResponse actualizarParcial(Integer id, CreateReservaRequest requestDto) throws Exception;
+      //  CreateReservaResponse actualizarParcial(Integer id, CreateReservaRequest requestDto) throws Exception;
+        UpdateReservaResponse updateReserva(Integer id, UpdateReservaRequest updateReservaRequest);
 }
+

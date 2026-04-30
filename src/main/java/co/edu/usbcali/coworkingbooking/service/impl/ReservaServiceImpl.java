@@ -1,7 +1,9 @@
 package co.edu.usbcali.coworkingbooking.service.impl;
 
 import co.edu.usbcali.coworkingbooking.dto.request.CreateReservaRequest;
+import co.edu.usbcali.coworkingbooking.dto.request.UpdateReservaRequest;
 import co.edu.usbcali.coworkingbooking.dto.response.CreateReservaResponse;
+import co.edu.usbcali.coworkingbooking.dto.response.UpdateReservaResponse;
 import co.edu.usbcali.coworkingbooking.mapper.ReservaMapper;
 import co.edu.usbcali.coworkingbooking.model.Espacio;
 import co.edu.usbcali.coworkingbooking.model.Reserva;
@@ -103,6 +105,7 @@ public class ReservaServiceImpl implements ReservaService {
         reservaRepository.delete(reserva);
     }
 
+/*
     @Override
     public CreateReservaResponse actualizarParcial(Integer id, CreateReservaRequest requestDto) throws Exception{
         try {
@@ -161,6 +164,72 @@ public class ReservaServiceImpl implements ReservaService {
         }catch (Exception e) {
             throw e;
         }
+    }
+
+ */
+
+    @Override
+    public UpdateReservaResponse updateReserva (
+            Integer id, UpdateReservaRequest updateReservaRequest) {
+        try{
+            // Validar que realmente exista la reserva en base de datos
+            Reserva reserva = reservaRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
+
+            /*
+
+            // --- VALIDACIONES MANUALES (Solo si el campo NO es null) ---
+            //idEspacio
+            if (Objects.isNull(updateReservaRequest.getEspacioId()) || updateReservaRequest.getEspacioId() <= 0) {
+                throw new Exception("El campo espacioId no puede ser nulo");
+            }
+
+            // idUsuario
+            if (Objects.isNull(updateReservaRequest.getUsuarioId()) || updateReservaRequest.getUsuarioId() <= 0) {
+                throw new Exception("El campo usuarioId no puede ser nulo");
+            }
+
+            // Cargar desde base de datos usando optional
+            Espacio espacio = espacioRepository.findById(updateReservaRequest.getEspacioId())
+                    .orElseThrow(() -> new RuntimeException("Espacio no encontrado con ID: " + updateReservaRequest.getEspacioId()));
+
+            Usuario usuario = usuarioRepository.findById(updateReservaRequest.getUsuarioId())
+                    .orElseThrow(() -> new RuntimeException("Espacio no encontrado con ID: " + updateReservaRequest.getUsuarioId()));
+
+            Optional<Usuario> usuarioOpt = usuarioRepository.findById(updateReservaRequest.getUsuarioId());
+
+
+            if (!usuarioOpt.isPresent()) {
+
+                throw new Exception("El usuario no existe en la base de datos.");
+            }
+            Optional<Espacio> espacioOpt = espacioRepository.findById(updateReservaRequest.getEspacioId());
+
+            if (!espacioOpt.isPresent()) {
+                throw new Exception("El espacio no existe en la base de datos.");
+            }
+*/
+            // Cargar las otras entidades foráneas usando el orElseThrow
+
+            // Modificar atributos de la reserva usando el request y los objetos foráneos
+         //   reserva.setEspacio(espacio);
+          //  reserva.setUsuario(usuario);
+            reserva.setEstado(updateReservaRequest.getEstado());
+          /*  reserva.setVersion(updateReservaRequest.getVersion());
+            reserva.setHoraFinTotal(updateReservaRequest.getHoraFinTotal());
+            reserva.setHoraInicio(updateReservaRequest.getHoraInicio());
+            reserva.setHoraFinUsuario(updateReservaRequest.getHoraFinUsuario());
+
+           */
+            Reserva guardada = reservaRepository.save(reserva);
+
+            return ReservaMapper.entityToUpdateReservaResponse(guardada);
+
+        }catch (Exception e){
+
+        }
+
+        return null;
     }
 
 }
