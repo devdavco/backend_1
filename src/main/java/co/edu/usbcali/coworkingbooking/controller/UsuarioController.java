@@ -53,14 +53,10 @@ public class UsuarioController {
     }
      */
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<EliminarUsuarioResponse> eliminarUsuario(@PathVariable Integer id) {
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Integer id) {
         usuarioService.eliminarUsuario(id);
-        EliminarUsuarioResponse response = EliminarUsuarioResponse.builder()
-                .success(true)
-                .message("Reserva eliminada exitosamente")
-                .idEliminado(id)
-                .build();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("Usuario eliminada exitosamente");
+
     }
 }

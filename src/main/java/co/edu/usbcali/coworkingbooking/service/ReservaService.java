@@ -14,6 +14,6 @@ public interface ReservaService {
         CreateReservaResponse getReservabyId(Integer id);
         void eliminarReserva(Integer id);
       //  CreateReservaResponse actualizarParcial(Integer id, CreateReservaRequest requestDto) throws Exception;
-        UpdateReservaResponse updateReserva(Integer id, UpdateReservaRequest updateReservaRequest);
+        UpdateReservaResponse updateReserva(Integer id, UpdateReservaRequest updateReservaRequest) throws Exception;
 }
 

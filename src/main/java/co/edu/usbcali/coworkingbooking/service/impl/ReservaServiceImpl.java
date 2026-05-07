@@ -169,9 +169,14 @@ public class ReservaServiceImpl implements ReservaService {
  */
 
     @Override
-    public UpdateReservaResponse updateReserva (
-            Integer id, UpdateReservaRequest updateReservaRequest) {
+    public UpdateReservaResponse updateReserva(
+            Integer id, UpdateReservaRequest updateReservaRequest) throws Exception{
         try{
+            // Validar que id no sea nulo
+            if (Objects.isNull(id)) {
+                throw new Exception("El id no puede ser nulo.");
+            }
+
             // Validar que realmente exista la reserva en base de datos
             Reserva reserva = reservaRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
@@ -226,10 +231,8 @@ public class ReservaServiceImpl implements ReservaService {
             return ReservaMapper.entityToUpdateReservaResponse(guardada);
 
         }catch (Exception e){
-
+            throw e;
         }
-
-        return null;
     }
 
 }
