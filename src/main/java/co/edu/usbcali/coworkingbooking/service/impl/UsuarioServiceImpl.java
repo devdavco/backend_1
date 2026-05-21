@@ -2,6 +2,7 @@ package co.edu.usbcali.coworkingbooking.service.impl;
 
 import co.edu.usbcali.coworkingbooking.dto.request.CreateUsuarioRequest;
 import co.edu.usbcali.coworkingbooking.dto.response.GetUsuarioResponse;
+import co.edu.usbcali.coworkingbooking.exception.UsuarioAlreadyExistsException;
 import co.edu.usbcali.coworkingbooking.mapper.UsuarioMapper;
 import co.edu.usbcali.coworkingbooking.model.Usuario;
 import co.edu.usbcali.coworkingbooking.repository.UsuarioRepository;
@@ -24,7 +25,9 @@ public class UsuarioServiceImpl implements UsuarioService {
                 throw new Exception("El objeto no puede ser nulo.");
 
             }
-
+            if (this.usuarioRepository.findFirstByEmail(createUsuarioRequest.getEmail()) != null) {
+                    throw new UsuarioAlreadyExistsException(createUsuarioRequest.getEmail());
+            }
             Usuario usuario = UsuarioMapper.createUsuarioRequestToEntity(createUsuarioRequest);
             usuario = usuarioRepository.save(usuario);
 
