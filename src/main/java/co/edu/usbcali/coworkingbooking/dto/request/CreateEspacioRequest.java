@@ -1,13 +1,13 @@
 package co.edu.usbcali.coworkingbooking.dto.request;
 
-import jakarta.persistence.Column;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 //@Builder
 @AllArgsConstructor
+@Valid
 public class CreateEspacioRequest {
 
 
