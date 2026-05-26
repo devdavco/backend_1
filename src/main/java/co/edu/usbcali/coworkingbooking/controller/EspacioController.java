@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/espacios")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EspacioController {
     //inyecciones de dependencias en el controller
     private final EspacioService espacioService;

@@ -18,11 +18,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
     private final UsuarioService  usuarioService;
-
     @GetMapping("/ping")
     public String ping() {
         return "pong";
