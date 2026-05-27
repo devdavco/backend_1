@@ -168,7 +168,7 @@ export function ReservasTable() {
     const matchesStatus = statusFilter === "all" || reserva.estado === statusFilter
     return matchesSearch && matchesStatus
   })
-
+/*
   const handleCreate = async () => {
     try {
       await reservaApi.create(formData)
@@ -186,6 +186,61 @@ export function ReservasTable() {
       console.log("[v0] Using demo mode - API not available")
     }
   }
+  */
+
+  const handleCreate = async () => {
+    try {
+      // 1. Validar que tenemos fechas
+      if (!formData.horaInicio || !formData.horaFinUsuario) {
+        alert("Por favor selecciona horas de inicio y fin");
+        return;
+      }
+
+      // 2. Transformación EXPLÍCITA y FORZADA
+      // Reemplazamos la 'T' por espacio y cortamos a 16 caracteres (YYYY-MM-DD HH:mm)
+      const horaInicioLimpa = formData.horaInicio.replace('T', ' ').slice(0, 16);
+      const horaFinLimpa = formData.horaFinUsuario.replace('T', ' ').slice(0, 16);
+      const horaFinTotalLimpa = formData.horaFinTotal.replace('T', ' ').slice(0, 16);
+
+      // 3. Construir el objeto final
+      const payload = {
+        usuarioId: Number(formData.usuarioId), // Asegurar que es número
+        espacioId: Number(formData.espacioId), // Asegurar que es número
+        horaInicio: horaInicioLimpa,           // String con espacio
+        horaFinUsuario: horaFinLimpa,          // String con espacio
+        horaFinTotal: horaFinTotalLimpa,       // String con espacio
+        estado: formData.estado.toUpperCase(), // Mayúsculas
+        version: 1
+      };
+
+      // 4. DEBUG: Imprimir lo que REALMENTE se va a enviar
+      console.log("=== ENVIANDO AL BACKEND ===");
+      console.log(JSON.stringify(payload));
+      console.log("==========================");
+
+      // 5. Llamar a la API pasando el payload transformado
+      await reservaApi.create(payload);
+
+      mutate();
+      setIsCreateOpen(false);
+
+      // Reset
+      setFormData({
+        usuarioId: 0,
+        espacioId: 0,
+        horaInicio: "",
+        horaFinUsuario: "",
+        horaFinTotal: "",
+        estado: "pendiente",
+      });
+    } catch (error) {
+      console.error("Error completo:", error);
+      // Si tienes acceso a la respuesta, imprime el cuerpo del error
+      if (error && typeof error === 'object' && 'message' in error) {
+        console.error("Mensaje error:", (error as any).message);
+      }
+    }
+  };
 
   const handleUpdateStatus = async (id: number, estado: string) => {
     try {
@@ -259,6 +314,12 @@ export function ReservasTable() {
       return dateString
     }
   }
+  // Nueva función para enviar al backend (Spring espera "yyyy-MM-dd HH:mm")
+  const formatForBackend = (dateString: string) => {
+    if (!dateString) return "";
+    // Reemplaza la 'T' por un espacio y corta cualquier segundo o zona horaria extra
+    return dateString.replace('T', ' ').substring(0, 16);
+  };
 
   return (
     <Card>
