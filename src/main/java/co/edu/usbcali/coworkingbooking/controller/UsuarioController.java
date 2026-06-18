@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 //@CrossOrigin(origins = "http://localhost:3000")
-//@CrossOrigin(origins = "https://backend-1-seven-murex.vercel.app")
+@CrossOrigin(origins = "https://backend-1-seven-murex.vercel.app")
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
