@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { SidebarNav } from "@/components/dashboard/sidebar-nav"
-import { Header } from "@/components/dashboard/header"
+import { DashboardLayout } from "@/components/dashboard/dashboard-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -35,14 +34,10 @@ export default function ConfiguracionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <SidebarNav />
-      <div className="pl-64">
-        <Header
-          title="Configuración"
-          description="Configura la conexión con el backend"
-        />
-        <main className="p-6">
+    <DashboardLayout
+      title="Configuración"
+      description="Configura la conexión con el backend"
+    >
           <div className="max-w-2xl space-y-6">
             <Card>
               <CardHeader>
@@ -180,8 +175,6 @@ export default function ConfiguracionPage() {
               </CardContent>
             </Card>
           </div>
-        </main>
-      </div>
-    </div>
+    </DashboardLayout>
   )
 }

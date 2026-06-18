@@ -2,8 +2,7 @@
 
 import useSWR from "swr"
 import { Users, Building2, CalendarDays, CheckCircle2, Clock, XCircle } from "lucide-react"
-import { SidebarNav } from "@/components/dashboard/sidebar-nav"
-import { Header } from "@/components/dashboard/header"
+import { DashboardLayout } from "@/components/dashboard/dashboard-layout"
 import { StatCard } from "@/components/dashboard/stat-card"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -134,14 +133,10 @@ export default function DashboardPage() {
   const recentReservas = reservas?.slice(0, 5) || []
 
   return (
-    <div className="min-h-screen bg-background">
-      <SidebarNav />
-      <div className="pl-64">
-        <Header
-          title="Dashboard"
-          description="Resumen general del sistema de reservas"
-        />
-        <main className="p-6">
+    <DashboardLayout
+      title="Dashboard"
+      description="Resumen general del sistema de reservas"
+    >
           {/* Stats Grid */}
           <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <StatCard
@@ -254,8 +249,6 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </div>
-        </main>
-      </div>
-    </div>
+    </DashboardLayout>
   )
 }
