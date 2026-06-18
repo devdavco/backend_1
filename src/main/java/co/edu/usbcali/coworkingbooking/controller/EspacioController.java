@@ -18,7 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/espacios")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://backend-1-seven-murex.vercel.app")
+
 public class EspacioController {
     //inyecciones de dependencias en el controller
     private final EspacioService espacioService;

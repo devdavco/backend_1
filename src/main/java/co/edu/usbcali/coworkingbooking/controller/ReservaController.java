@@ -16,7 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/reserva")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://backend-1-seven-murex.vercel.app")
 public class ReservaController {
 
     private final ReservaService reservaService;
